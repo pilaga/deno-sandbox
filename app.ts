@@ -1,10 +1,7 @@
-const text = 'This is a test - should be stored in a file';
+import { serve } from 'http://deno.land/std/http/server.ts';
 
-const encoder = new TextEncoder();
-const data = encoder.encode(text);
+const server = serve({ port: 3000 });
 
-Deno.writeFile('message.txt', data)
-.then(result => {
-    console.log('wrote to file!');
-})
-.catch(err => console.log(err));
+for await(const req of server) {
+    req.respond({ body: "hellow world" });
+}

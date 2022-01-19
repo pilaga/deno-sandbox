@@ -6,7 +6,7 @@ interface Todo {
     id: String,
     text: String
 };
-let todos: Todo[] [];
+let todos: Todo[] = [];
 
 router.get('/todos', (ctx) => {
     ctx.response.body = {
@@ -14,9 +14,33 @@ router.get('/todos', (ctx) => {
     };
 });
 
-router.post('/todos', (ctx) => {});
+router.post('/todos', (ctx) => {
+    const data = ctx.request.body({ type: "json" });
+    const newTodo: Todo = {
+        id: new Date().toISOString(),
+        text: data.value.text
+    };
+    todos.push(newTodo);
+    ctx.response.body = {
+        message: 'created todo',
+        todo: newTodo
+    };
+});
 
-router.put('/todos/:todoId', (ctx) => {});
+router.put('/todos/:todoId', (ctx) => {
+    const tid = ctx.params.todoId;
+    const data = ctx.request.body({ type: "json" });
+    const tindex = todos.findIndex(item => {
+        return item.id === tid;
+    });
+    todos[tindex] = {
+        id: todos[tindex].id,
+        text: data.value.text
+    };
+    ctx.response.body = {
+        message: 'updated todo'
+    };
+});
 
 router.delete('/todos/:todoId', (ctx) => {});
 

@@ -42,6 +42,14 @@ router.put('/todos/:todoId', (ctx) => {
     };
 });
 
-router.delete('/todos/:todoId', (ctx) => {});
+router.delete('/todos/:todoId', (ctx) => {
+    const tid = ctx.params.todoId;
+    todos = todos.filter(item => {
+        item.id !== tid;
+    });
+    ctx.response.body = {
+        message: 'deleted todo'
+    };
+});
 
 export default router;

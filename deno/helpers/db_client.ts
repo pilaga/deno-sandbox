@@ -5,7 +5,7 @@ let db: Database;
 export function connect() {
     const client = new MongoClient();
     client.connectWithUri("mongodb+srv://admin:<password>@cluster0.lrvxm.mongodb.net/denodb?retryWrites=true&w=majority");
-    db = client.database('todo-db');
+    db = client.database('todos');
 }
 
 export function getDb() {

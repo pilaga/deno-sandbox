@@ -9,9 +9,7 @@ interface Todo {
   text: string;
 }
 
-let todos: Todo[] = [];
-
-router.get('/todos', (ctx) => {
+router.get('/todos', async (ctx) => {
     const todos = await getDb().collection('todos').find();
     const transTodo = todos.map((todo: { _id: ObjectId, text: string }) => {
         return {

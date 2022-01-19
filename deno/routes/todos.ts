@@ -5,7 +5,7 @@ import { getDb } from '../helpers/db_client';
 const router = new Router();
 
 interface Todo {
-  id: string;
+  id?: string; //? = optional
   text: string;
 }
 
@@ -25,12 +25,11 @@ router.get('/todos', (ctx) => {
 router.post('/todos', async (ctx) => {
     const data = await ctx.request.body();
     const newTodo: Todo = {
-        id: new Date().toISOString(),
+        //id: new Date().toISOString(),
         text: data.value.text,
     };
-
-    todos.push(newTodo);
-
+    const id = await getDb().collection('todos').insertOne(newTodo);
+    newTodo.id = id.$oid;
     ctx.response.body = { message: 'Created todo!', todo: newTodo };
 });
 

@@ -1,15 +1,15 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
 
-import todoRoutes from './routes/todos.ts';
+import todosRoutes from './routes/todos.ts';
 
 const app = new Application();
 
 app.use(async (ctx, next) => {
-  console.log('middleware!');
-  await next(); //tells Oak we want this middleware to finish before sending back response
+  console.log('Middleware!');
+  await next();
 });
 
-app.use(todoRoutes.routes());
-app.use(todoRoutes.allowedMethods());
+app.use(todosRoutes.routes());
+app.use(todosRoutes.allowedMethods());
 
 await app.listen({ port: 3000 });

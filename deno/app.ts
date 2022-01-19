@@ -4,9 +4,10 @@ import todoRoutes from './routes/todos.ts';
 
 const app = new Application();
 
-// app.use((ctx) => {
-//   ctx.response.body = "Hello World!";
-// });
+app.use(async (ctx, next) => {
+  console.log('middleware!');
+  await next(); //tells Oak we want this middleware to finish before sending back response
+});
 
 app.use(todoRoutes.routes());
 app.use(todoRoutes.allowedMethods());
